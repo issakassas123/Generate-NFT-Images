@@ -1,5 +1,5 @@
 from os import listdir, rename, remove, rmdir
-from random import choice
+from random import choice, randint
 from shutil import copy
 from os.path import exists 
 from json import load, dump
@@ -14,10 +14,7 @@ def copyNFT(token = 1):
     if len(characters) == 0:
         return
 
-    if token % 2 == 0:
-        characterChoosen = characters[0]
-    
-    if token % 4 == 0:
+    if token % 3 == 0:
         characterChoosen = characters[0]
         
     else:
@@ -44,6 +41,9 @@ def copyNFT(token = 1):
         else:
             imgChoosen = choice(imgsChoosenList)
             jsonChoosen = imgChoosen.replace('png' , 'json')
+
+            remove(f"{destination_images}\AntiChrist #{token}.png")
+            remove(f"{destination_json}\AntiChrist #{token}.json")
             
             copy(f"{ImagesFolder}\{characterChoosen}\{backgroundChoosen}\{imgChoosen}",
                  f"{destination_images}\{imgChoosen}")
@@ -66,6 +66,7 @@ def copyNFT(token = 1):
             print(f"Image Copied {characterChoosen} #{token}")
 
 if __name__ == "__main__":
-    characters = getData()[1]
-    for token in range(1, 100001):
+    characters = [getData()[1][4], getData()[1][5]]
+    for i in range(0, 144):
+        token = randint(200, 14000)
         copyNFT(token)
